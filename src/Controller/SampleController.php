@@ -11,6 +11,7 @@ class SampleController extends AbstractController
     #[Route('/sample', name: 'app_sample')]
     public function index(): Response
     {
+        //Sample
         return $this->render('sample/index.html.twig', [
             'controller_name' => 'SampleController',
         ]);
