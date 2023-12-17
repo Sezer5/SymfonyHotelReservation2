@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/category')]
 class CategoryController extends AbstractController
 {
+    
     #[Route('/', name: 'app_category_index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -23,7 +24,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -35,10 +36,12 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $categories = $categoryRepository->findAll();
         return $this->render('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form,
+            'categories' => $categories
+            
         ]);
     }
 
@@ -51,7 +54,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Category $category, EntityManagerInterface $entityManager,CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -61,10 +64,12 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $categories = $categoryRepository->findAll();
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form,
+            'categories' => $categories
+
         ]);
     }
 
@@ -78,4 +83,7 @@ class CategoryController extends AbstractController
 
         return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    
 }
+//SomethingChanged

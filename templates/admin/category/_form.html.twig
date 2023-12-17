@@ -10,9 +10,15 @@
             <form name="category" method="post">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="category_parentid">Parent Id</label>
-                        <input type="number" id="category_parentid" name="category[parentid]" class="form-control"
-                            value="{{ category.id }}">
+                        <label for="exampleInputEmail1">Parent</label>
+                        <select id="category_parentid" name="category[parentid]" class="form-control">
+                            <option value="0">Main Category</option>
+                            {% for cat in categories%}
+                            <option value="{{cat.id}}" {{cat.id==category.parentid ? 'Selected' :''}}>{{cat.title}}
+                            </option>
+                            {% endfor %}
+                        </select>
+
                     </div>
                     <div class="form-group">
                         <label for="category_title">Category Title</label>
@@ -32,12 +38,18 @@
                     <div class="form-group">
                         <label for="category_image">Category Image</label>
                         <input type="text" id="category_image" name="category[image]" maxlength="150"
-                            class="form-control" value="{{ category.image }}">
+                            class="form-control" placeholder="Category Image">
                     </div>
+
                     <div class="form-group">
-                        <label for="category_status">Category Status</label>
-                        <input type="text" id="category_status" name="category[status]" maxlength="150"
-                            class="form-control" value="{{ category.status }}">
+                        <label for="exampleInputEmail1">Status</label>
+                        <select id="category_status" name="category[status]" class="form-control">
+                            <option value="{{category.status}}">{{category.status}}</option>
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+
+
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="category_created_at">Category Created At</label>
