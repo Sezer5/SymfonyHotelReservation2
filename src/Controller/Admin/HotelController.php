@@ -73,6 +73,21 @@ class HotelController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+             $file=$form['image']->getData();
+            if($file){
+                $fileName=$this->generateUniqueFileName().'.'.$file->guessExtension();
+                try{
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                }catch(FileException $e){
+
+                }
+                $hotel->setImage($fileName);
+            }
+            
+            $entityManager->persist($hotel);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);

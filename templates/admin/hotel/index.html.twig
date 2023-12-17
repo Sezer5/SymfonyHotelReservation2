@@ -48,7 +48,7 @@
                             <th>Keywords</th>
                             <th>Description</th>
                             <th>Image</th>
-                            
+                            <th>Gallery</th>
                             <th>Status</th>
                             <th>Created_at</th>
                             <th>Updated_at</th>
@@ -63,9 +63,14 @@
                             <td>{{ hotel.title }}</td>
                             <td>{{ hotel.keywords|raw }}</td>
                             <td>{{ hotel.description }}</td>
-                            <td><img src="{{asset('uploads/images/' ~ hotel.image) }}" style="width:40px">	
-									</td>
-                            
+                            <td><img src="{{asset('uploads/images/' ~ hotel.image) }}" style="width:40px">
+                            </td>
+                            <td>
+                                <a href="{{ path('app_image_new', {'id': hotel.id}) }}"
+                                    onclick="return !window.open(this.href,'','top=50 left=100 width=1100,height=700')">
+                                    <button class="btn btn-success">Gallery</button>
+                                </a>
+                            </td>
                             <td>{{ hotel.status }}</td>
                             <td>{{ hotel.createdAt ? hotel.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ hotel.updatedAt ? hotel.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
